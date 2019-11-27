@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/google/go-github/v28/github"
 	"github.com/gorilla/mux"
+	"github.com/wcharczuk/go-chart"
+	"golang.org/x/oauth2"
 	"net/http"
 	"os"
 )
@@ -13,13 +15,17 @@ func main() {
 	r := mux.NewRouter()
 
 	// Route: index
-	r.HandleFunc("/", indexHandleFunc).Methods("GET")
+	//r.HandleFunc("/", indexHandleFunc).Methods("GET")
 
 	// Route: chart
-	r.HandleFunc("/app/github-lcg/api/chart/{username}", chartHandleFunc).Methods("GET")
+	//r.HandleFunc("/app/github-lcg/api/chart/{username}", chartHandleFunc).Methods("GET")
+	rank := getLangRanking("ttnny")
+	for key, value := range rank {
+		fmt.Println(key, value)
+	}
 
 	// Route: contributions
-	r.HandleFunc("/app/github-lcg/api/contributions/{username}", contributionsHandleFunc).Methods("GET")
+	//r.HandleFunc("/app/github-lcg/api/contributions/{username}", contributionsHandleFunc).Methods("GET")
 
 	// Let's start
 	err := http.ListenAndServe(port(), r)
@@ -38,11 +44,54 @@ func indexHandleFunc(w http.ResponseWriter, _ *http.Request) {
 
 // Route: generates chart
 func chartHandleFunc(w http.ResponseWriter, r *http.Request) {
-	ctx := context.Background()
 	vars := mux.Vars(r)
 	username := vars["username"]
 
-	client := github.NewClient(nil)
+	rank := getLangRanking(username)
+	for key, value := range rank {
+		fmt.Fprintln(w, key, value)
+	}
+}
+
+// Route: generates graph of GitHub contributions
+func contributionsHandleFunc(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	username := vars["username"]
+
+	fmt.Fprintf(w, "You've requested the book: %s on page %s\n", username)
+}
+
+// Create pie chart
+func createPieChart() {
+	pie := chart.PieChart{
+		Width:  512,
+		Height: 512,
+		Values: []chart.Value{
+			{Value: 5, Label: "Blue"},
+			{Value: 5, Label: "Green"},
+			{Value: 4, Label: "Gray"},
+			{Value: 4, Label: "Orange"},
+			{Value: 3, Label: "Deep Blue"},
+			{Value: 3, Label: "??"},
+			{Value: 1, Label: "!!"},
+		},
+	}
+
+	f, _ := os.Create("output.png")
+	defer f.Close()
+	pie.Render(chart.PNG, f)
+}
+
+// Calculate GitHub language ranking
+func getLangRanking(username string) map[string]int {
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: "a13d09c261f1e95c3de70e040d5f35c0a405226c"},
+	)
+
+	tc := oauth2.NewClient(ctx, ts)
+
+	client := github.NewClient(tc)
 
 	// Get a slice of
 	repos, _, err := client.Repositories.List(ctx, username, nil)
@@ -60,7 +109,7 @@ func chartHandleFunc(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get languages info for each repo
-	var langs map[string]int
+	langs := make(map[string]int)
 	for _, repo := range list {
 		lang, _, err := client.Repositories.ListLanguages(ctx, username, repo)
 		if err != nil {
@@ -76,17 +125,7 @@ func chartHandleFunc(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	for key, value := range langs { // Order not specified
-		fmt.Fprintln(w, key, value)
-	}
-}
-
-// Route: generates graph of GitHub contributions
-func contributionsHandleFunc(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	username := vars["username"]
-
-	fmt.Fprintf(w, "You've requested the book: %s on page %s\n", username)
+	return langs
 }
 
 // Get/set the default port
