@@ -7,7 +7,8 @@ require (
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/google/go-github/v28 v28.1.1
 	github.com/gorilla/mux v1.7.3
-	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
+	github.com/mitchellh/mapstructure v1.1.2 // indirect
+	github.com/wcharczuk/go-chart v2.0.2-0.20190910040548-3a7bc5543113+incompatible
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c // indirect
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
