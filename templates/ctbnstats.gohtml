@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Contribution Heatmap</title>
+</head>
+<body>
+{{if .Success}}
+    <h1>Here is your GitHub Contribution Heatmap.</h1>
+{{else}}
+    <h1>GitHub Contribution Heatmap</h1>
+    <form action="/github-lcs/displayCtbnStats" method="POST">
+        <label>GitHub username:</label><br/>
+        <input type="text" name="username"><br/>
+        <input type="submit">
+    </form>
+{{end}}
+</body>
+</html>

@@ -12,7 +12,7 @@ import (
 func getLangRanking(username string) map[string]int {
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: "11a32038cfe50fa74f251f69b89a372eaf9074d4"},
+		&oauth2.Token{AccessToken: ""},
 	)
 
 	tc := oauth2.NewClient(ctx, ts)

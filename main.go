@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"html/template"
 	"net/http"
 	"os"
 )
@@ -11,20 +10,20 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	// Route: index
-	r.HandleFunc("/", indexHandleFunc).Methods("GET")
+	// Route: (API) Github LangStats (language rankings)
+	r.HandleFunc("/github-lcs/api/langstats/{username}", langStatsHandleFunc).Methods("GET")
 
-	// Route: chart
-	//r.HandleFunc("/app/github-lcg/api/chart/{username}", chartHandleFunc).Methods("GET")
-	rank := getLangRanking("ttnny")
-	for key, value := range rank {
-		fmt.Println(key, value)
-	}
+	// Route: (API) GitHub CtbnStats (contribution graph)
+	r.HandleFunc("/github-lcs/api/ctbnstats/{username}", ctbnStatsHandleFunc).Methods("GET")
 
-	toJSON(rank)
+	// Route: (Demo) Index
+	r.HandleFunc("/github-lcs", demoIndexHandleFunc).Methods("GET")
 
-	// Route: contributions
-	//r.HandleFunc("/app/github-lcg/api/contributions/{username}", contributionsHandleFunc).Methods("GET")
+	// Route: (Demo) Display GitHub LangStats
+	r.HandleFunc("/github-lcs/displayLangStats", demoLangStatsHandleFunc)
+
+	// Route: (Demo) Display GitHub CtbnStats
+	r.HandleFunc("/github-lcs/displayCtbnStats", demoCtbnStatsHandleFunc)
 
 	// Let's start
 	err := http.ListenAndServe(port(), r)
@@ -33,14 +32,8 @@ func main() {
 	}
 }
 
-// Route: index/home
-func indexHandleFunc(w http.ResponseWriter, _ *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index.gohtml"))
-	tmpl.Execute(w, nil)
-}
-
-// Route: generates chart
-func chartHandleFunc(w http.ResponseWriter, r *http.Request) {
+// Handle Route: (API) Github LangStats (language rankings)
+func langStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	username := vars["username"]
 
@@ -50,8 +43,8 @@ func chartHandleFunc(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Route: generates graph of GitHub contributions
-func contributionsHandleFunc(w http.ResponseWriter, r *http.Request) {
+// Handle Route: (API) GitHub CtbnStats (contribution graph)
+func ctbnStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	username := vars["username"]
 
