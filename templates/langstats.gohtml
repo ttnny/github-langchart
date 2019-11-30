@@ -5,43 +5,19 @@
     <title>GitHub Language Statistics</title>
 </head>
 <body>
-<canvas id="myChart"></canvas>
+<h1>GitHub Language Statistics</h1>
+<form action="/github-lcs/langstats" method="POST">
+    <label>GitHub username:</label><br/>
+    <input type="text" name="username"><br/>
+    <input type="submit">
+</form>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script>
-    var coloR = [];
+<p>"C#", "HTML", "JavaScript", "CSS", "Hack", "Python", "Shell", "Kotlin", "Java", "Go", "HCL", "PHP"</p>
+<p>197.827, 207.575, 1213.760, 543.984, 61.858, 12.557, 22.980, 57.185, 78.682, 4128.842, 41.077, 161.282</p>
+<p>The value shown for each language is the number of bytes of code written in that language.</p>
 
-    var dynamicColors = function() {
-        var r = Math.floor(Math.random() * 255);
-        var g = Math.floor(Math.random() * 255);
-        var b = Math.floor(Math.random() * 255);
-        return "rgb(" + r + "," + g + "," + b + ")";
-    };
-
-    for (var i in data) {
-        ict_unit.push("ICT Unit " + data[i].ict_unit);
-        efficiency.push(data[i].efficiency);
-        coloR.push(dynamicColors());
-    }
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'pie',
-
-        // The data for our dataset
-        data: {
-            labels: ["C#", "HTML", "JavaScript", "CSS", "Hack", "Python", "Shell", "Kotlin", "Java", "Go", "HCL", "PHP"],
-            datasets: [{
-                label: 'My First dataset',
-                backgroundColor: coloR,
-                data: [197.827, 207.575, 1213.760, 543.984, 61.858, 12.557, 22.980, 57.185, 78.682, 4128.842, 41.077, 161.282]
-            }]
-        },
-
-        // Configuration options go here
-        options: {}
-    });
-</script>
+{{if .}}
+    {{template "langchart" .}}
+{{end}}
 </body>
 </html>
