@@ -1,12 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
 
-func getContributionGraph(username string) string {
+// Handle Route: (API) GitHub CtbnStats (contribution graph)
+func ctbnStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	username := vars["username"]
+
+	_, err := fmt.Fprintln(w, getCtbnStats(username))
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// Get GitHub contribution graph
+func getCtbnStats(username string) string {
 	url := "https://github.com/users/" + username + "/contributions"
 
 	// Request the HTML page
@@ -14,9 +28,10 @@ func getContributionGraph(username string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	defer res.Body.Close()
 	if res.StatusCode != 200 {
-		log.Fatalf("Status code error: %d %s", res.StatusCode, res.Status)
+		log.Fatalf("Status/code error: %d %s", res.StatusCode, res.Status)
 	}
 
 	// Load the HTML document
