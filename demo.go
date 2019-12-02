@@ -13,6 +13,9 @@ type LangChart struct {
 
 // Route: (Demo) Handle Index
 func demoIndexHandleFunc(w http.ResponseWriter, _ *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/index.gohtml"))
+
+	tmpl.Execute(w, nil)
 }
 
 // Route: (Demo) Handle Display GitHub LangStats

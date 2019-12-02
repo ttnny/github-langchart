@@ -17,7 +17,7 @@ func main() {
 	r.HandleFunc("/github-lcs/api/ctbnstats/{username}", ctbnStatsHandleFunc).Methods("GET")
 
 	// Route: (Demo) Index
-	r.HandleFunc("/github-lcs", demoIndexHandleFunc).Methods("GET")
+	r.HandleFunc("/", demoIndexHandleFunc).Methods("GET")
 
 	// Route: (Demo) Display GitHub LangStats
 	r.HandleFunc("/github-lcs/langstats", demoLangStatsHandleFunc)
