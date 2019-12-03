@@ -9,3 +9,17 @@
     margin-left: 3.7em;
     transform: scale(1.1);
 }
+
+.tab-content>.tab-pane {
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+.tab-content>.tab-pane.active {
+    height: auto;
+}
+
+.nav-link:focus, .nav-link:hover {
+    background-color: white;
+    color: #6c757d;
+}
