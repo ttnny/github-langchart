@@ -5,11 +5,12 @@
     <title>GitHub Language Statistics :: Tony's Spacetime</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="ttnny.com/apps">Apps</a>
+        <a class="navbar-brand" href="//ttnny.com/apps">Apps</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
                 aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="ttnny.com">Back to .COM</a>
+                    <a class="nav-link" href="//ttnny.com">Back to Home</a>
                 </li>
             </ul>
         </div>
@@ -29,18 +30,19 @@
     <h1>GitHub Language Statistics</h1>
     <p class="pt-3">Please input your GitHub username:</p>
     <form action="/github-lcs/langstats" method="POST">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 form-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">example.com/github-lcs/api/ctbnstats/</span>
+                <span class="input-group-text">example.com/github-lcs/api/langstats/</span>
             </div>
-            <input type="text" name="username" class="form-control" placeholder="GitHub username">
+            <input type="text" name="username" class="form-control ttnny-input" placeholder="GitHub username">
             <div class="input-group-append">
                 <button class="btn btn-success" type="submit">Go</button>
             </div>
         </div>
     </form>
 
-    <p><em><strong>Note</strong>: The value shown for each language is the <u>number of bytes of code</u> written in that language.</em></p>
+    <p><em><strong>Note</strong>: The value shown for each language is the <u>number of bytes of code</u> written in
+            that language.</em></p>
 
     {{if .}}
         {{template "langchart" .}}
