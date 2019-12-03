@@ -25,6 +25,9 @@ func main() {
 	// Route: (Demo) Display GitHub CtbnStats
 	r.HandleFunc("/github-lcs/ctbnstats", demoCtbnStatsHandleFunc)
 
+	// Serve static files
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	// Let's start
 	err := http.ListenAndServe(port(), r)
 	if err != nil {
