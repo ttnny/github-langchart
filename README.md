@@ -12,7 +12,7 @@ Learning-by-doing, this project is deployed to different Cloud Computing Platfor
     - PaaS: AWS Elastic Beanstalk (EB)
     - FaaS: AWS Lambda (serverless architecture)
     
-![Cloud Computing Models](resources/img/cloud-computing-models.png)
+![Cloud Computing Models](static/img/cloud-computing-models.png)
 
 ### Usage (APIs)
 composing...
