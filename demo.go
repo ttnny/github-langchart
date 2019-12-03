@@ -8,7 +8,6 @@ import (
 type LangChart struct {
 	Langs     []string
 	Stats     []int
-	ChartType string
 }
 
 // Route: (Demo) Handle Index
@@ -42,7 +41,6 @@ func demoLangStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
 		var langChart LangChart
 		langChart.Langs = langs
 		langChart.Stats = stats
-		langChart.ChartType = "bar"
 
 		tmpl.Execute(w, langChart)
 	}
