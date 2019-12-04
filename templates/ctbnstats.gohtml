@@ -34,14 +34,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">example.com/github-lcs/api/ctbnstats/</span>
             </div>
-            <input type="text" name="username" class="form-control ttnny-input" placeholder="GitHub username">
+            <input type="text" name="username" class="form-control ttnny-input" placeholder="GitHub username" value="{{.Username}}" required>
             <div class="input-group-append">
                 <button class="btn btn-success" type="submit">Go</button>
             </div>
         </div>
     </form>
 
-    <div class="pt-4">{{.}}</div>
+    <div class="pt-4">{{.Ctbn}}</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
