@@ -21,3 +21,7 @@
     background-color: white;
     color: #6c757d;
 }
+
+.alert-info {
+    display: inline-block;
+}

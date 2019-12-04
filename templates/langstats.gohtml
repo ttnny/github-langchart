@@ -5,7 +5,8 @@
     <title>GitHub Language Statistics :: Tony's Spacetime</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,22 +28,27 @@
 </nav>
 
 <div class="container py-4">
-    <h1>GitHub Language Statistics</h1>
+    <h1>GitHub Language Statistics
+        <span class="ml-3"><a href="//github.com/ttnny/github-lcs" target="_blank"><i
+                        class="fab fa-github text-dark"></i></a></span>
+    </h1>
     <p class="pt-3">Please input your GitHub username:</p>
     <form action="/github-lcs/langstats" method="POST">
         <div class="input-group mb-3 form-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">example.com/github-lcs/api/langstats/</span>
             </div>
-            <input type="text" name="username" class="form-control ttnny-input" placeholder="GitHub username" value="{{.Username}}" required>
+            <input type="text" name="username" class="form-control ttnny-input" placeholder="GitHub username"
+                   value="{{.Username}}" required>
             <div class="input-group-append">
                 <button class="btn btn-success" type="submit">Go</button>
             </div>
         </div>
     </form>
 
-    <p><em><strong>Note</strong>: The value shown for each language is the <u>number of bytes of code</u> written in
-            that language.</em></p>
+    <p class="alert alert-info"><i class="fas fa-info-circle"></i> The value shown for each language is the <u>number of
+            bytes of code</u> written in
+        that language.</p>
 
     {{if .}}
         {{template "langchart" .}}
