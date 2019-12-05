@@ -27,12 +27,10 @@ func getCtbnStats(username string) string {
 	res, err := http.Get(url)
 	if err != nil {
 		fmt.Printf("Error(s): %v\n", err)
+		return ""
 	}
 
 	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		log.Fatalf("Status/code error: %d %s", res.StatusCode, res.Status)
-	}
 
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(res.Body)
