@@ -26,7 +26,7 @@ func getCtbnStats(username string) string {
 	// Request the HTML page
 	res, err := http.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("Error(s): %v\n", err)
 	}
 
 	defer res.Body.Close()

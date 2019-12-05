@@ -9,7 +9,6 @@ import (
 	"golang.org/x/oauth2"
 	"log"
 	"net/http"
-	"os"
 )
 
 // Handle Route: (API) Github LangStats (language rankings)
@@ -33,28 +32,26 @@ func getLangStats(username string) map[string]int {
 	ctx := context.Background()
 
 	// Uncomment these to create a GitHub authenticated client with your token
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ""}, )
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "b630426f7f8ea09288be04d3b4402a7cec8d0d7b"}, )
 	tc := oauth2.NewClient(ctx, ts)
 	client := github.NewClient(tc)
 
 	// Create a GitHub non-authenticated client
 	// client := github.NewClient(nil)
 
-	// Get a list of repos from GitHub account
-	listOptions := github.ListOptions{Page: 1, PerPage: 1}
-	opt := &github.RepositoryListOptions{ListOptions: listOptions}
+	// Get a list of 100 most recent pushed/updated repos from GitHub account
+	listOptions := github.ListOptions{Page: 1, PerPage: 100}
+	opt := &github.RepositoryListOptions{ListOptions: listOptions, Sort: "pushed"}
 	repos, _, err := client.Repositories.List(ctx, username, opt)
 
 	// Address API rate limit and other errors
 	if err != nil {
 		fmt.Printf("Error(s): %v\n", err)
-		os.Exit(1)
 	}
 
 	// Convert the list of repos to type string slice
 	var list []string
 	for _, repo := range repos {
-		fmt.Println(*repo.Name)
 		list = append(list, *repo.Name)
 	}
 
