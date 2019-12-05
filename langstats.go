@@ -32,7 +32,7 @@ func getLangStats(username string) map[string]int {
 	ctx := context.Background()
 
 	// Uncomment these to create a GitHub authenticated client with your token
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "b630426f7f8ea09288be04d3b4402a7cec8d0d7b"}, )
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ""}, )
 	tc := oauth2.NewClient(ctx, ts)
 	client := github.NewClient(tc)
 
