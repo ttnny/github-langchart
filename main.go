@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -29,14 +28,14 @@ func main() {
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("static"))))
 
 	// Let's start
-	err := http.ListenAndServe(port(), r)
+	err := http.ListenAndServe(":8082", r)
 	if err != nil {
 		fmt.Printf("Errors: %v\n", err)
 	}
 }
 
 // Get/set the default port
-func port() string {
+/*func port() string {
 	port := os.Getenv("PORT")
 
 	if len(port) == 0 {
@@ -44,4 +43,4 @@ func port() string {
 	}
 
 	return ":" + port
-}
+}*/

@@ -31,14 +31,19 @@ func langStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
 // Get GitHub language statistics
 func getLangStats(username string) map[string]int {
 	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "ce72ca5f59a697660c8a2038df3dd264aea8785d"}, )
 
-	// Create a GitHub authenticated client
+	// Uncomment these to create a GitHub authenticated client with your token
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ""}, )
 	tc := oauth2.NewClient(ctx, ts)
 	client := github.NewClient(tc)
 
+	// Create a GitHub non-authenticated client
+	// client := github.NewClient(nil)
+
 	// Get a list of repos from GitHub account
-	repos, _, err := client.Repositories.List(ctx, username, nil)
+	listOptions := github.ListOptions{Page: 1, PerPage: 1}
+	opt := &github.RepositoryListOptions{ListOptions: listOptions}
+	repos, _, err := client.Repositories.List(ctx, username, opt)
 
 	// Address API rate limit and other errors
 	if err != nil {
@@ -49,6 +54,7 @@ func getLangStats(username string) map[string]int {
 	// Convert the list of repos to type string slice
 	var list []string
 	for _, repo := range repos {
+		fmt.Println(*repo.Name)
 		list = append(list, *repo.Name)
 	}
 
@@ -61,7 +67,7 @@ func getLangStats(username string) map[string]int {
 		}
 
 		for k, v := range lang {
-			if value, found := langStats[k]; found { // if exists, add up value only
+			if value, found := langStats[k]; found { // if exists, add up value
 				langStats[k] = v + value
 			} else {
 				langStats[k] = v
