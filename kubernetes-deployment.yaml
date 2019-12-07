@@ -1,0 +1,24 @@
+# This is a very basic YAML file structure
+# of configs for deployment to Kubernetes
+
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "your-app"
+  namespace: "default"
+  labels:
+    app: "your-app"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "your-app"
+  template:
+    metadata:
+      labels:
+        app: "your-app"
+    spec:
+      containers:
+        - name: "your-app"
+          image: "[HOSTNAME]/[PROJECT-ID]/[IMAGE]" # e.g. gcr.io/my-project/hello-app:v1
