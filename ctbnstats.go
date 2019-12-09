@@ -13,7 +13,16 @@ func ctbnStatsHandleFunc(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	username := vars["username"]
 
-	_, err := fmt.Fprintln(w, getCtbnStats(username))
+	// Get the graph
+	graph := getCtbnStats(username)
+
+	// Prepare SVG format
+	svg := graph[:4] + ` version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="font-size: 10px; fill: #767676; font-family: sans-serif, Arial, Helvetica;"` + graph[4:]
+
+	// Set response type
+	w.Header().Set("Content-Type", "image/svg+xml")
+
+	_, err := fmt.Fprintf(w, svg)
 	if err != nil {
 		log.Fatal(err)
 	}
