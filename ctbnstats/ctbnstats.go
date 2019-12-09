@@ -21,13 +21,19 @@ func ctbnStatsHandleFunc(r events.APIGatewayProxyRequest) (events.APIGatewayProx
 	username := r.PathParameters["username"]
 
 	// Get the contribution graph
-	svg := getCtbnStats(username)
+	graph := getCtbnStats(username)
+
+	// Prepare SVG format
+	svg := graph[:4] + ` version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="font-size: 10px; fill: #767676; font-family: sans-serif, Arial, Helvetica;"` + graph[4:]
 
 	// Return a response with a 200 OK status
 	// and the SVG (string) in the body.
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Body:       svg,
+		Headers: map[string]string{
+			"Content-Type": "image/svg+xml",
+		},
 	}, nil
 }
 
