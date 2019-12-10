@@ -14,7 +14,7 @@ Learning-by-doing, this project is deployed to different Cloud Computing Platfor
     - PaaS: AWS Elastic Beanstalk
     - FaaS: AWS Lambda (a serverless architecture)
     
-**Note**: checkout the `aws-lambda` branch for details on deploying AWS Lambda functions.
+**Note**: checkout the `aws-lambda` branch for details about deploying AWS Lambda functions.
     
 ![Cloud Computing Platforms & Services](static/img/cloud-computing-platforms-and-services.svg)
 
