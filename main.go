@@ -25,7 +25,7 @@ func main() {
 	r.HandleFunc("/github-lcs/ctbnstats", demoCtbnStatsHandleFunc)
 
 	// Serve static files
-	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("static"))))
+	r.PathPrefix("assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("static"))))
 
 	// Let's start
 	err := http.ListenAndServe(":8082", r)
